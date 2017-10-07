@@ -9,11 +9,11 @@ class BroadcastingEventSubscriber
 {
 
     /**
-     * [onAdminMain 后台前端路由注册 侧栏菜单注册]
+     * [onBuilderTablePackage 后台模型table渲染处理]
      * @param  [type] $event [description]
      * @return [type]        [description]
      */
-    public function onConfig($event)
+    public function onBuilderTablePackage($event)
     {
       $table = $event->table;
       if ($table->event == 'adminPackage') {
@@ -36,7 +36,7 @@ class BroadcastingEventSubscriber
     {
         $events->listen(
             'CoreCMF\Core\Support\Events\BuilderTable',
-            'CoreCMF\Broadcasting\App\Listeners\BroadcastingEventSubscriber@onConfig'
+            'CoreCMF\Broadcasting\App\Listeners\BroadcastingEventSubscriber@onBuilderTablePackage'
         );
     }
 

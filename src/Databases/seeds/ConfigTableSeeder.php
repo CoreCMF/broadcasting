@@ -1,5 +1,5 @@
 <?php
-namespace CoreCMF\Omnipay\Databases\seeds;
+namespace CoreCMF\Broadcasting\Databases\seeds;
 
 use DB;
 use Illuminate\Database\Seeder;
@@ -14,7 +14,7 @@ class ConfigTableSeeder extends Seeder
     public function run()
     {
         DB::table('broadcasting_configs')->insert([
-          'host' => 'localhost',
+          'host' => 'localhost'
         ]);
     }
 }

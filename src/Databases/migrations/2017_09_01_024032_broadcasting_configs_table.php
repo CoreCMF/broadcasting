@@ -15,7 +15,7 @@ class BroadcastingConfigsTable extends Migration
     {
         Schema::create('broadcasting_configs', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('app_id',60)          ->comment('AppId');
+            $table->string('app_id',60)          ->comment('AppId')->nullable();
             $table->string('app_key',60)         ->comment('AppKey')->nullable();
             $table->string('host',80)            ->comment('主机地址')->nullable();
             $table->string('port',160)           ->comment('端口')->nullable();

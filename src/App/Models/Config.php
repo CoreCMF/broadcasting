@@ -27,6 +27,7 @@ class Config extends Model
                 $laravelEchoServer = [
                     'driver' => 'pusher',
                     'key' => $config->app_key,
+                    'secret' => null,
                     'app_id' => $config->app_id,
                     'options' => [
                         'host' => $config->host,

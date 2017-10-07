@@ -41,7 +41,7 @@ class BroadcastingServiceProvider extends ServiceProvider
          //配置路由
          $this->loadRoutesFrom(__DIR__.'/Routes/api.php');
          // 加载配置
-         $this->mergeConfigFrom(__DIR__.'/Config/config.php', 'broadcasting');//组件配置信息
+         $this->mergeConfigFrom(__DIR__.'/Config/config.php', 'broadcast');//组件配置信息
          $config = new Config();
          $config->configRegister();//注册配置信息
          //注册providers服务
@@ -54,7 +54,7 @@ class BroadcastingServiceProvider extends ServiceProvider
       */
      public function registerProviders()
      {
-         $providers = config('broadcasting.providers');
+         $providers = config('broadcast.providers');
          foreach ($providers as $provider) {
              $this->app->register($provider);
          }
@@ -65,8 +65,10 @@ class BroadcastingServiceProvider extends ServiceProvider
       */
      public function viewShare()
      {
+         $appUrl = config('broadcasting.connections.laravel-echo-server.options.app_url');
+         $port = config('broadcasting.connections.laravel-echo-server.options.port');
          $builderAsset = resolve('builderAsset');
-         $builderAsset->js('/socket.io/socket.io.js');
+         $builderAsset->js('//'.$appUrl.':'.$port.'/socket.io/socket.io.js');
          view()->share('resources', $builderAsset->response());//视图共享数据
      }
 }

@@ -17,12 +17,18 @@ class ConfigController extends Controller
     public function index(Request $request)
     {
         $configs = $this->configModel->first();
-        $this->builderForm = resolve('builderForm')->item(['name' => 'status',         'type' => 'switch',   'label' => '开关']);
-        $this->builderForm->item(['name' => 'gateway', 'type' => 'hidden']);
-        $this->publicGatewayForm($gateway,$configs);//根据不同网关添加不同 form item
-        $this->publicForm();//添加公共form item
-        $this->builderForm->apiUrl('submit',route('api.admin.Broadcasting.config.update'))->itemData($configs);
-        return resolve('builderHtml')->title('支付配置')->item($this->builderForm)->config('layout',['xs' => 24, 'sm' => 20, 'md' => 18, 'lg' => 16])->response();
+        $builderForm = resolve('builderForm')
+                ->item(['name' => 'id', 'type' => 'hidden'])
+                ->item(['name' => 'status',         'type' => 'switch',   'label' => '开关'])
+                ->item(['name' => 'app_id',  'type' => 'text',    'label' => 'AppId',       'placeholder' => 'AppId'])
+                ->item(['name' => 'app_key', 'type' => 'text',     'label' => 'AppKey',     'placeholder' => 'AppKey'])
+                ->item(['name' => 'host',    'type' => 'text',     'label' => '主机地址',    'placeholder' => '主机地址:默认localhost'])
+                ->item(['name' => 'port',    'type' => 'text',     'label' => '端口',        'placeholder' => '主机端口'])
+                ->item(['name' => 'app_url', 'type' => 'text',     'label' => '前端访问地址',  'placeholder' => '前端访问地址、不要加http类前缀'])
+                ->config('labelWidth','120px')
+                ->apiUrl('submit',route('api.admin.broadcasting.config.update'))
+                ->itemData($configs);
+        return resolve('builderHtml')->title('广播配置')->item($builderForm)->config('layout',['xs' => 24, 'sm' => 20, 'md' => 18, 'lg' => 16])->response();
     }
     /**
      * [update 配置更新]
@@ -31,10 +37,10 @@ class ConfigController extends Controller
      */
     public function update(Request $request)
     {
-        if ($this->configModel->where('gateway', '=', $request->gateway)->update($request->all())) {
+        if ($this->configModel->where('id', '=', $request->id)->update($request->all())) {
           $message = [
                       'title'     => '保存成功',
-                      'message'   => '系统设置保存成功!',
+                      'message'   => '广播设置保存成功!',
                       'type'      => 'success',
                   ];
         }

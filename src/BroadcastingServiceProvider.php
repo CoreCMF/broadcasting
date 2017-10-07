@@ -39,7 +39,6 @@ class BroadcastingServiceProvider extends ServiceProvider
      public function initService()
      {
          //配置路由
-         $this->loadRoutesFrom(__DIR__.'/Routes/web.php');
          $this->loadRoutesFrom(__DIR__.'/Routes/api.php');
          // 加载配置
          $this->mergeConfigFrom(__DIR__.'/Config/config.php', 'broadcasting');//组件配置信息

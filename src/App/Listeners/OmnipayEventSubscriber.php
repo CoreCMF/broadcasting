@@ -15,10 +15,17 @@ class BroadcastingEventSubscriber
      */
     public function onConfig($event)
     {
-        $main = $event->main;
-        switch ($main->event) {
-
-        }
+      $table = $event->table;
+      if ($table->event == 'adminPackage') {
+          $table->data->transform(function ($item, $key) {
+              if ($item->name == 'Broadcasting') {
+                  $item->rightButton = [
+                      ['title'=>'广播配置','apiUrl'=> route('api.admin.broadcasting.config'),'type'=>'info', 'icon'=>'fa fa-edit']
+                  ];
+              }
+              return $item;
+          });
+      }
     }
     /**
      * 为订阅者注册监听器.
@@ -28,7 +35,7 @@ class BroadcastingEventSubscriber
     public function subscribe($events)
     {
         $events->listen(
-            'CoreCMF\Core\Support\Events\BuilderMain',
+            'CoreCMF\Core\Support\Events\BuilderTable',
             'CoreCMF\Broadcasting\App\Listeners\BroadcastingEventSubscriber@onConfig'
         );
     }

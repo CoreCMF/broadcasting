@@ -37,6 +37,6 @@ class UninstallCommand extends Command
     public function handle()
     {
         //删除对应数据库数据
-        $this->info($this->uninstall->dropTable('Broadcasting_configs'));
+        $this->info($this->uninstall->dropTable('broadcasting_configs'));
     }
 }

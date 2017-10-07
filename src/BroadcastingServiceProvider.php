@@ -45,6 +45,8 @@ class BroadcastingServiceProvider extends ServiceProvider
 
          //注册providers服务
          $this->registerProviders();
+         //视图共享数据
+         $this->viewShare();
      }
      /**
       * 注册引用服务
@@ -55,5 +57,15 @@ class BroadcastingServiceProvider extends ServiceProvider
          foreach ($providers as $provider) {
              $this->app->register($provider);
          }
+     }
+     /**
+      * [viewShare 视图共享数据]
+      * @return [type] [description]
+      */
+     public function viewShare()
+     {
+         $builderAsset = resolve('builderAsset');
+         $builderAsset->js('/socket.io/socket.io.js');
+         view()->share('resources', $builderAsset->response());//视图共享数据
      }
 }

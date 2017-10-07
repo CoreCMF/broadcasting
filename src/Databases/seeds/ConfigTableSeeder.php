@@ -14,7 +14,8 @@ class ConfigTableSeeder extends Seeder
     public function run()
     {
         DB::table('broadcasting_configs')->insert([
-          'host' => 'localhost'
+          'host' => 'localhost',
+          'port'  => 6001
         ]);
     }
 }

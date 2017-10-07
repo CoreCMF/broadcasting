@@ -18,8 +18,8 @@ class BroadcastingConfigsTable extends Migration
             $table->string('app_id',60)          ->comment('AppId')->nullable();
             $table->string('app_key',60)         ->comment('AppKey')->nullable();
             $table->string('host',80)            ->comment('主机地址')->nullable();
-            $table->string('port',160)           ->comment('端口')->nullable();
-            $table->string('app_url',160)        ->comment('前端主机访问地址')->nullable();
+            $table->integer('port')              ->comment('端口')->nullable();
+            $table->string('app_url',160)        ->comment('前端访问地址')->nullable();
             $table->boolean('status')            ->comment('开关状态')->default(false);
             $table->timestamps();
         });

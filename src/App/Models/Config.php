@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Config extends Model
 {
-    public $table = 'Broadcasting_configs';
+    public $table = 'broadcasting_configs';
 
     protected $fillable = [];
 

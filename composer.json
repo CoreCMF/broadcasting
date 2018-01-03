@@ -6,7 +6,8 @@
         "CoreCMF",
         "broadcasting",
         "alipay",
-        "wechat"
+        "wechat",
+        "广播插件"
     ],
     "homepage": "https://github.com/CoreCMF/broadcasting",
     "license": "laravel vue corecmf broadcasting",
@@ -44,7 +45,21 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.3.1-dev"
+            "dev-master": "1.3.x-dev"
+        },
+        "corecmf": {
+            "name": "Broadcasting",
+            "title": "广播插件",
+            "description": "广播插件 可配置laravel-echo-sever",
+            "author": "BigRocs",
+            "version": "1.3.2",
+            "providers": [
+                "CoreCMF\\Broadcasting\\BroadcastingServiceProvider",
+                "App\\Providers\\BroadcastServiceProvider",
+                "CoreCMF\\Broadcasting\\Providers\\EventServiceProvider"
+            ],
+            "install": "corecmf:broadcasting:install",
+            "uninstall": "corecmf:broadcasting:uninstall"
         }
     },
     "config": {

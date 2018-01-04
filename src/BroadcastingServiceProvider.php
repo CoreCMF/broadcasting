@@ -31,47 +31,34 @@ class BroadcastingServiceProvider extends ServiceProvider
      */
     public function register()
     {
-          $this->initService();
+        $this->initService();
     }
     /**
      * 初始化服务
      */
-     public function initService()
-     {
-         //配置路由
-         $this->loadRoutesFrom(__DIR__.'/Routes/api.php');
-         // 加载配置
-         $this->mergeConfigFrom(__DIR__.'/Config/config.php', 'broadcast');//组件配置信息
-         $config = new Config();
-         $config->configRegister();//注册配置信息
-         //注册providers服务
-         $this->registerProviders();
-         //视图共享数据
-         $this->viewShare();
-     }
-     /**
-      * 注册引用服务
-      */
-     public function registerProviders()
-     {
-         $providers = config('broadcast.providers');
-         foreach ($providers as $provider) {
-             $this->app->register($provider);
-         }
-     }
-     /**
-      * [viewShare 视图共享数据]
-      * @return [type] [description]
-      */
-     public function viewShare()
-     {
-         $appUrl = config('broadcasting.connections.laravel-echo-server.options.app_url');
-         $port = config('broadcasting.connections.laravel-echo-server.options.port');
-         $appUrl = config('broadcasting.connections.laravel-echo-server.options.app_url');
-         $builderAsset = resolve('builderAsset')->config('broadcast',[
+    public function initService()
+    {
+        //配置路由
+        $this->loadRoutesFrom(__DIR__.'/Routes/api.php');
+        // 加载配置
+        $config = new Config();
+        $config->configRegister();//注册配置信息
+        //视图共享数据
+        $this->viewShare();
+    }
+    /**
+     * [viewShare 视图共享数据]
+     * @return [type] [description]
+     */
+    public function viewShare()
+    {
+        $appUrl = config('broadcasting.connections.laravel-echo-server.options.app_url');
+        $port = config('broadcasting.connections.laravel-echo-server.options.port');
+        $appUrl = config('broadcasting.connections.laravel-echo-server.options.app_url');
+        $builderAsset = resolve('builderAsset')->config('broadcast', [
              'broadcaster' => 'socket.io',
              'host' => $appUrl.':'.$port
          ])->js('//'.$appUrl.':'.$port.'/socket.io/socket.io.js');
-         view()->share('resources', $builderAsset->response());//视图共享数据
-     }
+        view()->share('resources', $builderAsset->response());//视图共享数据
+    }
 }

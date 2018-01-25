@@ -20,7 +20,13 @@ class BroadcastingEventSubscriber
             $table->data->transform(function ($item, $key) {
                 if ($item->name == 'Broadcasting') {
                     $item->rightButton = [
-                      ['title'=>'广播配置','apiUrl'=> route('api.admin.broadcasting.config'),'type'=>'info', 'icon'=>'fa fa-edit']
+                      [
+                          'title'=>'广播配置',
+                          'apiUrl'=> route('api.admin.broadcasting.config'),
+                          'type'=>'info',
+                          'icon'=>'fa fa-edit',
+                          'method'=>'dialog'
+                      ]
                   ];
                 }
                 return $item;

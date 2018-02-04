@@ -17,12 +17,11 @@ Route::group(['prefix' => 'api', 'middleware' => 'api', 'namespace' => 'CoreCMF\
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => []], function () {
-    	// 后台仪表盘路由
-	    Route::group(['prefix' => 'broadcasting', 'as' => 'broadcasting.'], function () {
-        //配置
-		    Route::post('config',                ['as' => 'config',     'uses' => 'ConfigController@index']);
-        Route::post('config/update',         ['as' => 'config.update','uses' => 'ConfigController@update']);
-		  });
-
-	 });
+        // 后台仪表盘路由
+        Route::group(['prefix' => 'broadcasting', 'as' => 'broadcasting.'], function () {
+            //配置
+            Route::post('config', ['as' => 'config',     'uses' => 'ConfigController@index']);
+            Route::post('config/update', ['as' => 'config.update','uses' => 'ConfigController@update']);
+        });
+    });
 });

@@ -10,7 +10,7 @@
         "广播插件"
     ],
     "homepage": "https://github.com/CoreCMF/broadcasting",
-    "license": "laravel vue corecmf broadcasting",
+    "license": "MIT",
     "authors": [
         {
             "name": "bigrocs",

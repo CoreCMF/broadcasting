@@ -3,7 +3,6 @@
 namespace CoreCMF\Broadcasting\App\Console;
 
 use Illuminate\Console\Command;
-
 use CoreCMF\Core\Support\Commands\Uninstall;
 
 class UninstallCommand extends Command
@@ -37,7 +36,5 @@ class UninstallCommand extends Command
      */
     public function handle()
     {
-        //删除对应数据库数据
-        $this->info($this->uninstall->dropTable('broadcasting_configs'));
     }
 }

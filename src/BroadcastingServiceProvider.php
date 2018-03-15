@@ -20,8 +20,6 @@ class BroadcastingServiceProvider extends ServiceProvider
     {
         //加载artisan commands
         $this->commands($this->commands);
-        //迁移文件配置
-        $this->loadMigrationsFrom(__DIR__.'/Databases/migrations');
     }
 
     /**

@@ -6,15 +6,12 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use CoreCMF\Core\App\Models\PackageConfig;
-use CoreCMF\Broadcasting\App\Models\Config;
 
 class ConfigController extends Controller
 {
-    private $configModel;
     private $packageConfig;
 
-    public function __construct(Config $configPro,PackageConfig $packageConfigPro){
-       $this->configModel = $configPro;
+    public function __construct(PackageConfig $packageConfigPro){
        $this->packageConfig = $packageConfigPro;
     }
     public function index(Request $request)
@@ -64,11 +61,24 @@ class ConfigController extends Controller
      */
     public function update(Request $request)
     {
-        if ($this->configModel->where('id', '=', $request->id)->update($request->all())) {
+        if ($this->packageConfig->where('id', '=', $request->id)->update([
+            'value' => json_encode([
+              'app_id' => $request->app_id,
+              'app_key' => $request->app_key,
+              'host' => $request->host,
+              'port'  => $request->port
+            ])
+          ])) {
           $message = [
                       'title'     => '保存成功',
                       'message'   => '广播设置保存成功!',
                       'type'      => 'success',
+                  ];
+        }else{
+          $message = [
+                      'title'     => '保存失败',
+                      'message'   => '广播设置保存失败!',
+                      'type'      => 'error',
                   ];
         }
         return resolve('builderHtml')->message($message)->response();

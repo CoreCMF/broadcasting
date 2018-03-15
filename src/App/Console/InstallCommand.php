@@ -41,7 +41,6 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->info($this->install->migrate());
         $this->info($this->install->seed(\CoreCMF\Broadcasting\Databases\seeds\ConfigTableSeeder::class));
     }
 }

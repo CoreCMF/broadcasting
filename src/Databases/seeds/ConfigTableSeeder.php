@@ -13,9 +13,16 @@ class ConfigTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('broadcasting_configs')->insert([
-          'host' => 'localhost',
-          'port'  => 6001
+        DB::table('core_package_configs')->insert([
+          'name' => 'Broadcasting',
+          'key' => 'Socket.IO',
+          'value' => json_encode([
+            'app_id' => null,
+            'app_key' => null, 
+            'host' => 'localhost',
+            'port'  => 6001
+          ]),
+          'status' => 'close',
         ]);
     }
 }

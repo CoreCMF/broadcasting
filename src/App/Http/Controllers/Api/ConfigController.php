@@ -5,26 +5,53 @@ namespace CoreCMF\Broadcasting\App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use CoreCMF\Core\App\Models\PackageConfig;
 use CoreCMF\Broadcasting\App\Models\Config;
 
 class ConfigController extends Controller
 {
     private $configModel;
+    private $packageConfig;
 
-    public function __construct(Config $configPro){
+    public function __construct(Config $configPro,PackageConfig $packageConfigPro){
        $this->configModel = $configPro;
+       $this->packageConfig = $packageConfigPro;
     }
     public function index(Request $request)
     {
-        $configs = $this->configModel->first();
+        $configs = $this->packageConfig->where('name', 'Broadcasting')->where('key', 'Socket.IO')->first();
+
         $builderForm = resolve('builderForm')
                 ->item(['name' => 'id', 'type' => 'hidden'])
                 ->item(['name' => 'status',         'type' => 'switch',   'label' => '开关'])
-                ->item(['name' => 'app_id',  'type' => 'text',    'label' => 'AppId',       'placeholder' => 'AppId'])
-                ->item(['name' => 'app_key', 'type' => 'text',     'label' => 'AppKey',     'placeholder' => 'AppKey'])
-                ->item(['name' => 'host',    'type' => 'text',     'label' => '主机地址',    'placeholder' => '主机地址:默认localhost'])
-                ->item(['name' => 'port',    'type' => 'text',     'label' => '端口',        'placeholder' => '主机端口'])
-                ->item(['name' => 'app_url', 'type' => 'text',     'label' => '前端访问地址',  'placeholder' => '前端访问地址、不要加http类前缀'])
+                ->item([
+                    'name' => 'app_id',
+                    'type' => 'text',
+                    'label' => 'AppId',
+                    'placeholder' => 'AppId',
+                    'loadAttribute'=>['value.app_id']
+                 ])
+                ->item([
+                    'name' => 'app_key',
+                    'type' => 'text',
+                    'label' => 'AppKey',
+                    'placeholder' => 'AppKey',
+                    'loadAttribute'=>['value.app_key']
+                ])
+                ->item([
+                    'name' => 'host',
+                    'type' => 'text',
+                    'label' => '主机地址',
+                    'placeholder' => '主机地址:默认localhost',
+                    'loadAttribute'=>['value.host']
+                ])
+                ->item([
+                    'name' => 'port',
+                    'type' => 'text',
+                    'label' => '端口',
+                    'placeholder' => '主机端口',
+                    'loadAttribute'=>['value.port']
+                ])
                 ->config('labelWidth','120px')
                 ->apiUrl('submit',route('api.admin.broadcasting.config.update'))
                 ->itemData($configs);

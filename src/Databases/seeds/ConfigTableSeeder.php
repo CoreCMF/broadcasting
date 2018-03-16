@@ -17,12 +17,12 @@ class ConfigTableSeeder extends Seeder
           'name' => 'Broadcasting',
           'key' => 'Socket.IO',
           'value' => json_encode([
-            'app_id' => null,
-            'app_key' => null, 
-            'host' => 'localhost',
-            'port'  => 6001
-          ]),
-          'status' => 'close',
+              'status' => false,
+             'app_id' => null,
+             'app_key' => null,
+             'host' => 'localhost',
+             'port'  => 6001
+          ])
         ]);
     }
 }

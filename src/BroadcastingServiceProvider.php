@@ -55,8 +55,8 @@ class BroadcastingServiceProvider extends ServiceProvider
         $appUrl = config('broadcasting.connections.laravel-echo-server.options.app_url');
         $builderAsset = resolve('builderAsset')->config('broadcast', [
              'broadcaster' => 'socket.io',
-             'host' => $appUrl.':'.$port
-         ])->js('//'.$appUrl.':'.$port.'/socket.io/socket.io.js');
+             'host' => env('APP_URL').':'.$port
+         ])->js(env('APP_URL').':'.$port.'/socket.io/socket.io.js');
         view()->share('resources', $builderAsset->response());//视图共享数据
     }
 }

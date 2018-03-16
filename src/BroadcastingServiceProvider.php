@@ -3,7 +3,7 @@
 namespace CoreCMF\Broadcasting;
 
 use Illuminate\Support\ServiceProvider;
-use CoreCMF\Broadcasting\App\Models\Config;
+use CoreCMF\Core\App\Models\PackageConfig;
 
 class BroadcastingServiceProvider extends ServiceProvider
 {
@@ -38,11 +38,35 @@ class BroadcastingServiceProvider extends ServiceProvider
     {
         //配置路由
         $this->loadRoutesFrom(__DIR__.'/Routes/api.php');
-        // 加载配置
-        $config = new Config();
-        $config->configRegister();//注册配置信息
+        $this->configRegister(new PackageConfig);//注册配置信息
         //视图共享数据
         $this->viewShare();
+    }
+    /**
+     * [configRegister 注册配置]
+     * @return   [type]         [description]
+     * @Author   bigrocs
+     * @QQ       532388887
+     * @Email    bigrocs@qq.com
+     * @DateTime 2018-03-16
+     */
+    public function configRegister($packageConfig)
+    {
+        $config = $packageConfig->where('name', 'Broadcasting')->where('key', 'Socket.IO')->first()->value;
+        if ($config['status']) {
+            $laravelEchoServer = [
+                'driver' => 'pusher',
+                'key' => $config['app_key'],
+                'secret' => null,
+                'app_id' => $config['app_id'],
+                'options' => [
+                    'host' => $config['host'],
+                    'port' => $config['port'],
+                ]
+            ];
+            config(['broadcasting.default' => 'laravel-echo-server']);
+            config(['broadcasting.connections.laravel-echo-server' => $laravelEchoServer]);
+        }
     }
     /**
      * [viewShare 视图共享数据]

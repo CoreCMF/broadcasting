@@ -17,7 +17,7 @@ class ConfigTableSeeder extends Seeder
           'name' => 'Broadcasting',
           'key' => 'Socket.IO',
           'value' => json_encode([
-              'status' => false,
+             'status' => false,
              'app_id' => null,
              'app_key' => null,
              'host' => 'localhost',

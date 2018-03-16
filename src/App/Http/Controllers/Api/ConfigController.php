@@ -11,8 +11,9 @@ class ConfigController extends Controller
 {
     private $packageConfig;
 
-    public function __construct(PackageConfig $packageConfigPro){
-       $this->packageConfig = $packageConfigPro;
+    public function __construct(PackageConfig $packageConfigPro)
+    {
+        $this->packageConfig = $packageConfigPro;
     }
     public function index(Request $request)
     {
@@ -20,7 +21,12 @@ class ConfigController extends Controller
 
         $builderForm = resolve('builderForm')
                 ->item(['name' => 'id', 'type' => 'hidden'])
-                ->item(['name' => 'status',         'type' => 'switch',   'label' => '开关'])
+                ->item([
+                    'name' => 'status',
+                    'type' => 'switch',
+                    'label' => '开关',
+                    'loadAttribute'=>['value.status']
+                ])
                 ->item([
                     'name' => 'app_id',
                     'type' => 'text',
@@ -49,10 +55,10 @@ class ConfigController extends Controller
                     'placeholder' => '主机端口',
                     'loadAttribute'=>['value.port']
                 ])
-                ->config('labelWidth','120px')
-                ->apiUrl('submit',route('api.admin.broadcasting.config.update'))
+                ->config('labelWidth', '120px')
+                ->apiUrl('submit', route('api.admin.broadcasting.config.update'))
                 ->itemData($configs);
-        return resolve('builderHtml')->title('广播配置')->item($builderForm)->config('layout',['xs' => 24, 'sm' => 20, 'md' => 18, 'lg' => 16])->response();
+        return resolve('builderHtml')->title('广播配置')->item($builderForm)->config('layout', ['xs' => 24, 'sm' => 20, 'md' => 18, 'lg' => 16])->response();
     }
     /**
      * [update 配置更新]
@@ -63,19 +69,20 @@ class ConfigController extends Controller
     {
         if ($this->packageConfig->where('id', '=', $request->id)->update([
             'value' => json_encode([
-              'app_id' => $request->app_id,
-              'app_key' => $request->app_key,
-              'host' => $request->host,
-              'port'  => $request->port
+                'status' => $request->status,
+                'app_id' => $request->app_id,
+                'app_key' => $request->app_key,
+                'host' => $request->host,
+                'port'  => $request->port
             ])
           ])) {
-          $message = [
+            $message = [
                       'title'     => '保存成功',
                       'message'   => '广播设置保存成功!',
                       'type'      => 'success',
                   ];
-        }else{
-          $message = [
+        } else {
+            $message = [
                       'title'     => '保存失败',
                       'message'   => '广播设置保存失败!',
                       'type'      => 'error',

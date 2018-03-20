@@ -3,6 +3,7 @@
 namespace CoreCMF\Broadcasting;
 
 use Illuminate\Support\ServiceProvider;
+use CoreCMF\Core\App\Models\Package;
 use CoreCMF\Core\App\Models\PackageConfig;
 
 class BroadcastingServiceProvider extends ServiceProvider
@@ -11,6 +12,7 @@ class BroadcastingServiceProvider extends ServiceProvider
         \CoreCMF\Broadcasting\App\Console\InstallCommand::class,
         \CoreCMF\Broadcasting\App\Console\UninstallCommand::class,
     ];
+    protected $packageName = 'Broadcasting';
     /**
      * Perform post-registration booting of services.
      *
@@ -38,9 +40,18 @@ class BroadcastingServiceProvider extends ServiceProvider
     {
         //配置路由
         $this->loadRoutesFrom(__DIR__.'/Routes/api.php');
-        $this->configRegister(new PackageConfig);//注册配置信息
+        if ($this->isInstall()) {
+            $this->configRegister(new PackageConfig);//注册配置信息
+        }
         //视图共享数据
         $this->viewShare();
+    }
+    /**
+     * 检测安装情况
+     */
+    public function isInstall(){
+        $package = new Package();
+        return $package->isInstall($this->packageName);
     }
     /**
      * [configRegister 注册配置]

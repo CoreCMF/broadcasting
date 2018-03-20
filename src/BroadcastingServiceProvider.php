@@ -52,20 +52,22 @@ class BroadcastingServiceProvider extends ServiceProvider
      */
     public function configRegister($packageConfig)
     {
-        $config = $packageConfig->where('name', 'Broadcasting')->where('key', 'Socket.IO')->first()->value;
-        if ($config['status']) {
-            $laravelEchoServer = [
-                'driver' => 'pusher',
-                'key' => $config['app_key'],
-                'secret' => null,
-                'app_id' => $config['app_id'],
-                'options' => [
-                    'host' => $config['host'],
-                    'port' => $config['port'],
-                ]
-            ];
-            config(['broadcasting.default' => 'laravel-echo-server']);
-            config(['broadcasting.connections.laravel-echo-server' => $laravelEchoServer]);
+        $config = $packageConfig->where('name', 'Broadcasting')->where('key', 'Socket.IO')->first();
+        if ($config) {
+          if ($config->value['status']) {
+              $laravelEchoServer = [
+                  'driver' => 'pusher',
+                  'key' => $config->value['app_key'],
+                  'secret' => null,
+                  'app_id' => $config->value['app_id'],
+                  'options' => [
+                      'host' => $config->value['host'],
+                      'port' => $config->value['port'],
+                  ]
+              ];
+              config(['broadcasting.default' => 'laravel-echo-server']);
+              config(['broadcasting.connections.laravel-echo-server' => $laravelEchoServer]);
+          }
         }
     }
     /**
